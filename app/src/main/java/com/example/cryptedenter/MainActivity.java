@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     private void checkEnter() {
+        // check if the input is good
         main_BTN_enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,8 +72,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 if(check.equals(String.valueOf(currentHour)+String.valueOf(currentMinute)+String.valueOf(levelBattery)+String.valueOf(random+1))){
                     if(Float.parseFloat(step.toString()) >= 30.0){
-                       toast("Succes enter");
-                       goToSucces();
+                       toast("Success enter");
+                       goToSuccess();
                     }else {
                         toast("please make 30 step or more");
                     }
@@ -84,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         });
     }
 
-    private void goToSucces() {
-
+    private void goToSuccess() {
+        // go to other activity if success
         Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity2.class);
         startActivity(goToNextActivity);
     }
@@ -97,11 +98,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            //Receiver for battery level
             levelBattery = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
         }
     };
 
     private void vibrationAction() {
+        //do vibration like the random number
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         main_BTN_vibration.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
     private void getTime() {
+        // update time every second
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -218,6 +222,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        //count your number step
         if (running) {
             step = String.valueOf(event.values[0]);
             main_LBL_steps.setText("Your step number is : " + step);
